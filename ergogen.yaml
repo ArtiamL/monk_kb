@@ -1,0 +1,130 @@
+units:
+  U: 19.05
+  kx: 14
+  ky: 14
+points:
+  zones:
+    matrix:
+      anchor:
+        rotate: 5
+      columns:
+        outer:
+          key:
+        pinky:
+          key:
+            origin: [0, -20]
+            splay: -2
+            stagger: 5
+        ring:
+          key:
+            origin: [0, -20]
+            splay: -2
+            stagger: 15
+        middle:
+          key:
+            origin: [0, -10]
+            splay: -5
+            stagger: 7
+        index:
+          key:
+            splay: -2
+            stagger: -3
+        inner:
+          key:
+            splay: -2
+            stagger: -5
+      rows:
+        bottom:
+        home:
+        middle:
+        top:
+    thumbfan:
+      rotate: 5
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-25, -25]
+      columns:
+        near:
+          rows.top.skip: true
+          key:
+        middle:
+          rows.top.skip: true
+          key:
+            spread: 20
+            splay: -12
+            origin: [-10, -9]
+        middle2:
+          rows.top.skip: true
+          key:
+            spread: 20
+            splay: -12
+            origin: [-10, -9]
+        far:
+          key:
+            spread: 20
+            # splay: -5
+            origin: [-10, -9]
+      rows:
+        thumb:
+        top:
+          width: 1.5U
+          shift: [-10, 0]
+netlist:
+  rows:
+    - matrix_bottom
+    - matrix_home
+    - matrix_middle
+    - matrix_top
+    - thumbfan_thumb
+    - thumbfan_top
+  cols:
+    - matrix_outer
+    - matrix_pinky
+    - matrix_ring_thumbfan_near
+    - matrix_middle_thumbfan_middle
+    - matrix_index_thumbfan_middle2
+    - matrix_inner_thumbfan_top_thumbfan_far
+pcbs:
+  main:
+    footprints:
+      - where: "controller"
+        what: "jscad/xiao_nrf52840_plus"
+        params:
+        from:
+          rows: 
+            - matrix_bottom
+            - matrix_home
+            - matrix_middle
+            - matrix_top
+            - thumbfan_thumb
+            - thumbfan_top
+          cols: 
+            - matrix_outer
+            - matrix_pinky
+            - matrix_ring_thumbfan_near
+            - matrix_middle_thumbfan_middle
+            - matrix_index_thumbfan_middle2
+            - matrix_inner_thumbfan_top_thumbfan_far
+        to:
+          rows: [0, 1, 2, 3, 4, 5]
+          cols: [6, 7, 8, 9, 10, 11]
+      - where: "keys"
+        what: "diode"
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      size: [u+15, u+16]
+      fillet: 2
+  keys:
+    - what: rectangle
+      where: true
+      size: [kx, ky]
+  cutout:
+    - name: raw
+    - operation: subtract
+      name: keys
+cases:
+  plate:
+    - name: cutout
+      extrude: 4
