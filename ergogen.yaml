@@ -2,6 +2,7 @@ units:
   U: 19.05
   kx: 14
   ky: 14
+
 points:
   zones:
     matrix:
@@ -9,35 +10,61 @@ points:
         rotate: 5
       columns:
         outer:
-          key:
+          key: {}
+          rows:
+            bottom.key: {}
+            home.key: {}
+            middle.key: {}
+            top.key: {}
         pinky:
           key:
             origin: [0, -20]
             splay: -2
             stagger: 5
+          rows:
+            bottom.key: {}
+            home.key: {}
+            middle.key: {}
+            top.key: {}
         ring:
           key:
             origin: [0, -20]
             splay: -2
             stagger: 15
+          rows:
+            bottom.key: {}
+            home.key: {}
+            middle.key: {}
+            top.key: {}
         middle:
           key:
             origin: [0, -10]
             splay: -5
             stagger: 7
+          rows:
+            bottom.key: {}
+            home.key: {}
+            middle.key: {}
+            top.key: {}
         index:
           key:
             splay: -2
             stagger: -3
+          rows:
+            bottom.key: {}
+            home.key: {}
+            middle.key: {}
+            top.key: {}
         inner:
           key:
             splay: -2
             stagger: -5
-      rows:
-        bottom:
-        home:
-        middle:
-        top:
+          rows:
+            bottom.key: {}
+            home.key: {}
+            middle.key: {}
+            top.key: {}
+
     thumbfan:
       rotate: 5
       anchor:
@@ -45,30 +72,43 @@ points:
         shift: [-25, -25]
       columns:
         near:
-          rows.top.skip: true
-          key:
+          rows:
+            thumb.key: {}
+            top:
+              skip: true
+          key: {}
         middle:
-          rows.top.skip: true
+          rows:
+            thumb.key: {}
+            top:
+              skip: true
           key:
             spread: 20
             splay: -12
             origin: [-10, -9]
         middle2:
-          rows.top.skip: true
+          rows:
+            thumb.key: {}
+            top:
+              skip: true
           key:
             spread: 20
             splay: -12
             origin: [-10, -9]
         far:
+          rows:
+            thumb.key: {}
+            top.key: {}
           key:
             spread: 20
-            # splay: -5
             origin: [-10, -9]
       rows:
-        thumb:
+        thumb: {}
         top:
           width: 1.5U
           shift: [-10, 0]
+
+
 netlist:
   rows:
     - matrix_bottom
@@ -84,32 +124,17 @@ netlist:
     - matrix_middle_thumbfan_middle
     - matrix_index_thumbfan_middle2
     - matrix_inner_thumbfan_top_thumbfan_far
+
 pcbs:
   main:
     footprints:
-      - where: "controller"
-        what: "jscad/xiao_nrf52840_plus"
-        params:
-        from:
-          rows: 
-            - matrix_bottom
-            - matrix_home
-            - matrix_middle
-            - matrix_top
-            - thumbfan_thumb
-            - thumbfan_top
-          cols: 
-            - matrix_outer
-            - matrix_pinky
-            - matrix_ring_thumbfan_near
-            - matrix_middle_thumbfan_middle
-            - matrix_index_thumbfan_middle2
-            - matrix_inner_thumbfan_top_thumbfan_far
-        to:
-          rows: [0, 1, 2, 3, 4, 5]
-          cols: [6, 7, 8, 9, 10, 11]
-      - where: "keys"
+      # - where: true
+      #   what: "ceoloide/mcu_supermini_nrf52840"
+      #   adjust:
+      #     shift: [0, -40]
+      - where: keys
         what: "diode"
+
 outlines:
   raw:
     - what: rectangle
@@ -124,6 +149,7 @@ outlines:
     - name: raw
     - operation: subtract
       name: keys
+
 cases:
   plate:
     - name: cutout
